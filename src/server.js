@@ -1,32 +1,50 @@
+// src/server.js
+
 import express from 'express';
-import cors from 'cors';
+import dotenv from 'dotenv';
 import pino from 'pino-http';
-import { getAllContacts, getContactById } from './controllers/contacts.js';
+import cors from 'cors';
 
-const PORT = Number(process.env.PORT) || 3000;
+import studentsRouter from './routers/contacts.js';
 
-export const setupServer = () => {
+import { getEnvVar } from './utils/getEnvVar.js';
+
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+
+dotenv.config();
+const PORT = Number(getEnvVar('PORT', '3000'));
+
+export const startServer = () => {
   const app = express();
 
-  // Middleware
+  app.use(
+    express.json({
+      type: ['application/json', 'application/vnd.api+json'],
+      limit: '100kb',
+    }),
+  );
   app.use(cors());
-  app.use(pino({
-    transport: {
-      target: 'pino-pretty',
-    },
-  }));
-  app.use(express.json());
 
-  // Routes
-  app.get('/contacts', getAllContacts);
-  app.get('/contacts/:contactId', getContactById);
+  app.use(
+    pino({
+      transport: {
+        target: 'pino-pretty',
+      },
+    }),
+  );
 
-  // 404 handler
-  app.use('*', (req, res) => {
-    res.status(404).json({
-      message: 'Not found',
+  app.get('/', (req, res) => {
+    res.json({
+      message: 'Hello World!',
     });
   });
+
+  app.use(studentsRouter);
+
+  app.use(notFoundHandler);
+
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
