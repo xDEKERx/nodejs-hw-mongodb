@@ -7,8 +7,22 @@ import {
   updateContact,
 } from '../services/contacts.js';
 
-export const getContactsController = async (req, res, next) => {
-  const contacts = await getAllContacts();
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
+import { parseFilterParams } from '../utils/parseFilterParams.js';
+
+export const getContactsController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+  const filter = parseFilterParams(req.query);
+  const contacts = await getAllContacts({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    filter,
+  });
+
   res.status(200).json({
     status: 200,
     message: 'Successfully found contacts!',
@@ -48,7 +62,7 @@ export const deleteContactController = async (req, res, next) => {
   const contact = await deleteContact(contactId);
 
   if (!contact) {
-    next(createHttpError(404, 'Contacts not found'));
+    next(createHttpError(404, 'Student not found'));
     return;
   }
 
@@ -88,7 +102,7 @@ export const patchContactController = async (req, res, next) => {
 
   res.json({
     status: 200,
-    message: `Successfully patched  a contact!`,
+    message: `Successfully patched a contact!`,
     data: result.contact,
   });
 };
