@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import pino from 'pino-http';
 import cors from 'cors';
 
-import studentsRouter from './routers/contacts.js';
+import contactsRouter from './routers/contacts.js';
 
 import { getEnvVar } from './utils/getEnvVar.js';
 
@@ -40,7 +40,7 @@ export const startServer = () => {
     });
   });
 
-  app.use(studentsRouter);
+  app.use(contactsRouterRouter);
 
   app.use(notFoundHandler);
 
