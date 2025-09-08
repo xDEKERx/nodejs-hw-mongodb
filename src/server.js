@@ -1,5 +1,3 @@
-// src/server.js
-
 import express from 'express';
 import dotenv from 'dotenv';
 import pino from 'pino-http';
