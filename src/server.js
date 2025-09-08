@@ -7,9 +7,7 @@ import cors from 'cors';
 
 import cookieParser from 'cookie-parser';
 
-// import router from './routers/index.js';
-
-import contactsRouter from './routers/contacts.js';
+import router from './routers/index.js';
 
 import { getEnvVar } from './utils/getEnvVar.js';
 
@@ -21,7 +19,6 @@ const PORT = Number(getEnvVar('PORT', '3000'));
 
 export const startServer = () => {
   const app = express();
-
   app.use(
     express.json({
       type: ['application/json', 'application/vnd.api+json'],
@@ -46,7 +43,7 @@ export const startServer = () => {
     });
   });
 
-  app.use(contactsRouter);
+  app.use(router);
 
   app.use(notFoundHandler);
 
