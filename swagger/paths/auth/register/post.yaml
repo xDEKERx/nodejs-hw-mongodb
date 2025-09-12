@@ -1,0 +1,51 @@
+tags:
+  - Auth
+summary: Create account
+operationId: createAccount
+description: 'Create a new account'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            description: 'User name'
+            type: string
+            example: 'John Doe'
+          email:
+            description: 'User email'
+            type: string
+            example: 'example@mail.com'
+          password:
+            description: 'User password'
+            type: string
+responses:
+  '201':
+    description: Creates a new account
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a new account!
+            data:
+              type: object
+              $ref: ../../../components/schemas/auth.yaml
+  '401':
+    $ref: '../../../components/responses/401.yaml'
