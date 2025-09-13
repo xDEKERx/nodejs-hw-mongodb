@@ -1,5 +1,5 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.3",
   "info": {
     "version": "1.0.0",
     "title": "Contacts app",
@@ -57,7 +57,7 @@
                   },
                   "phoneNumber": {
                     "description": "Contact's phone number",
-                    "type": "number",
+                    "type": "string",
                     "example": "+380509215077"
                   },
                   "email": {
@@ -257,7 +257,7 @@
         }
       }
     },
-    "/contact/{id}": {
+    "/contacts/{id}": {
       "get": {
         "tags": [
           "Contacts"
@@ -320,9 +320,9 @@
         "tags": [
           "Contacts"
         ],
-        "summary": "Update contact by id",
-        "operationId": "UpdateContact",
-        "description": "Update contact by id",
+        "summary": "Update contact by ID",
+        "description": "Update an existing contact by ID",
+        "operationId": "updateContact",
         "security": [
           {
             "bearerAuth": []
@@ -336,81 +336,84 @@
             "schema": {
               "type": "string",
               "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "isFavourite": {
+                    "type": "boolean"
+                  },
+                  "contactType": {
+                    "type": "string",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ]
+                  }
+                },
+                "example": {
+                  "name": "Jane Doe",
+                  "phoneNumber": "+380000000005",
+                  "isFavourite": true
+                }
+              }
             },
-            "requestBody": {
-              "content": {
-                "multipart/form-data": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "description": "Contact's name",
-                        "type": "string",
-                        "example": "John Doe"
-                      },
-                      "phoneNumber": {
-                        "description": "Contact's phone number",
-                        "type": "string",
-                        "example": "+380509215077"
-                      },
-                      "email": {
-                        "description": "Contact's email",
-                        "type": "string",
-                        "example": "example@mail.com"
-                      },
-                      "isFavourite": {
-                        "description": "Contact's is Favourite mark",
-                        "type": "boolean",
-                        "example": false
-                      },
-                      "contactType": {
-                        "description": "Contact's type",
-                        "type": "string",
-                        "enum": [
-                          "personal",
-                          "home",
-                          "work"
-                        ],
-                        "example": "personal"
-                      },
-                      "photo": {
-                        "description": "Contact's photo",
-                        "type": "string",
-                        "format": "binary"
-                      }
-                    }
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "isFavourite": {
+                    "type": "boolean"
+                  },
+                  "contactType": {
+                    "type": "string",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ]
                   }
                 }
               }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Update contact by id",
+            "description": "Contact successfully updated",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully patch student with id 65ca67e7ae7f10c88b598384!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/contact"
-                    }
-                  }
+                  "$ref": "#/components/schemas/contact"
                 }
               }
             }
@@ -572,7 +575,7 @@
           },
           "phoneNumber": {
             "description": "Contact's phone number",
-            "type": "number",
+            "type": "string",
             "example": "+380509215077"
           },
           "email": {

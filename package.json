@@ -24,6 +24,7 @@
   "homepage": "https://github.com/xDEKERx/nodejs-hw-mongodb/tree/hw2-mongodb",
   "description": "",
   "dependencies": {
+    "@apidevtools/swagger-parser": "^12.0.0",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.7.0",
     "cookie-parser": "^1.4.7",
@@ -41,7 +42,8 @@
     "nodemailer": "^7.0.6",
     "nodemon": "^3.1.10",
     "pino-http": "^10.5.0",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
