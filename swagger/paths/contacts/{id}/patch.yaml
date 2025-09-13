@@ -1,84 +1,51 @@
 tags:
   - Contacts
-summary: Update contact by id
-operationId: UpdateContact
-description: 'Update contact by id'
+summary: Update contact by ID
+description: Update an existing contact by ID
+operationId: updateContact
 security:
   - bearerAuth: []
 parameters:
   - in: path
     name: id
     required: true
+    description: Unique identifier of the contact
     schema:
       type: string
-      example: '65ca67e7ae7f10c88b598384'
+      example: 65ca67e7ae7f10c88b598384
 requestBody:
-  description: Fields to update in the contact
   required: true
   content:
-    application/json:
-      schema:
-        type: object
-        properties:
-          name:
-            type: string
-            description: "Contact's name"
-            example: 'John Doe'
-          phoneNumber:
-            type: string
-            description: "Contact's phone number"
-            example: '+380509215077'
-          email:
-            type: string
-            description: "Contact's email"
-            example: 'example@mail.com'
-          isFavourite:
-            type: boolean
-            description: "Contact's is Favourite mark"
-            example: false
-          contactType:
-            type: string
-            description: "Contact's type"
-            enum: ['personal', 'home', 'work']
-            example: 'personal'
-      example:
-        name: 'John Doe'
-        phoneNumber: '+380509215077'
-        email: 'example@mail.com'
-        isFavourite: false
-        contactType: 'personal'
     multipart/form-data:
       schema:
         type: object
         properties:
           name:
             type: string
-            description: "Contact's name"
-            example: 'John Doe'
+            example: Jane Doe
           phoneNumber:
             type: string
-            description: "Contact's phone number"
-            example: '+380509215077'
+            example: '+380000000005'
           email:
             type: string
-            description: "Contact's email"
-            example: 'example@mail.com'
+            example: janedoe@mail.com
           isFavourite:
             type: boolean
-            description: "Contact's is Favourite mark"
-            example: false
+            example: true
           contactType:
             type: string
-            description: "Contact's type"
-            enum: ['personal', 'home', 'work']
-            example: 'personal'
+            enum: ['work', 'home', 'personal']
+            example: home
           photo:
             type: string
             format: binary
-            description: "Contact's photo"
+      example:
+        name: Jane Doe
+        phoneNumber: '+380000000005'
+        isFavourite: true
 responses:
   '200':
-    description: 'Update contact by id'
+    description: Contact successfully updated
     content:
       application/json:
         schema:
@@ -93,8 +60,9 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully patch contact with id 65ca67e7ae7f10c88b598384!
+              example: Successfully updated contact with id 65ca67e7ae7f10c88b598384
             data:
-              $ref: '../../../components/schemas/contact.yaml'
-  '401':
-    $ref: '../../../components/responses/401.yaml'
+              type: object
+              $ref: ../../../components/schemas/contact.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml
