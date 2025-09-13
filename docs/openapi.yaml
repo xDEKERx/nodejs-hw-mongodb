@@ -11,7 +11,7 @@ tags:
     description: Operations about users.
 servers:
   - url: http://localhost:3000
-  - url: https://nodejs-hw-mongodb-l98y.onrender.com
+  - url: https://nodejs-hw-mongodb-9-dkva.onrender.com
 paths:
   /contacts:
     post:
@@ -25,7 +25,7 @@ paths:
       $ref: ../swagger/paths/contacts/{id}/patch.yaml
     delete:
       $ref: ../swagger/paths/contacts/{id}/delete.yaml
-  /auth:
+  /auth/register:
     post:
       $ref: ../swagger/paths/auth/register/post.yaml
 components:

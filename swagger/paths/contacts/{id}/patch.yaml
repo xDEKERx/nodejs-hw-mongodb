@@ -1,5 +1,5 @@
 tags:
-  - Contact
+  - Contacts
 summary: Update contact by id
 operationId: UpdateContact
 description: 'Update contact by id'
@@ -12,6 +12,38 @@ parameters:
     schema:
       type: string
       example: '65ca67e7ae7f10c88b598384'
+
+    requestBody:
+    content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            description: "Contact's name"
+            type: string
+            example: 'John Doe'
+          phoneNumber:
+            description: "Contact's phone number"
+            type: string
+            example: '+380509215077'
+          email:
+            description: "Contact's email"
+            type: string
+            example: 'example@mail.com'
+          isFavourite:
+            description: "Contact's is Favourite mark"
+            type: boolean
+            example: false
+          contactType:
+            description: "Contact's type"
+            type: string
+            enum: ['personal', 'home', 'work']
+            example: personal
+          photo:
+            description: "Contact's photo"
+            type: string
+            format: binary
 responses:
   '200':
     description: 'Update contact by id'
