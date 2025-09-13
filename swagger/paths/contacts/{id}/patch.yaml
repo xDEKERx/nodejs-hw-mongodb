@@ -9,7 +9,6 @@ parameters:
   - in: path
     name: id
     required: true
-    description: Unique identifier of the contact
     schema:
       type: string
       example: 65ca67e7ae7f10c88b598384
@@ -23,29 +22,26 @@ requestBody:
         properties:
           name:
             type: string
-            example: Jane Doe
           phoneNumber:
             type: string
-            example: '+380000000005'
           email:
             type: string
-            example: janedoe@mail.com
           isFavourite:
             type: boolean
-            example: true
           contactType:
             type: string
             enum: ['work', 'home', 'personal']
-            example: home
-      example:
-        name: Jane Doe
-        phoneNumber: '+380000000005'
-        isFavourite: true
-
+        example:
+          name: Jane Doe
+          phoneNumber: '+380000000005'
+          isFavourite: true
     multipart/form-data:
       schema:
         type: object
         properties:
+          photo:
+            type: string
+            format: binary
           name:
             type: string
           phoneNumber:
@@ -57,9 +53,6 @@ requestBody:
           contactType:
             type: string
             enum: ['work', 'home', 'personal']
-          photo:
-            type: string
-            format: binary
 
 responses:
   '200':
@@ -67,19 +60,6 @@ responses:
     content:
       application/json:
         schema:
-          type: object
-          required:
-            - status
-            - message
-            - data
-          properties:
-            status:
-              type: integer
-              example: 200
-            message:
-              type: string
-              example: Successfully updated contact with id 65ca67e7ae7f10c88b598384
-            data:
-              $ref: ../../../components/schemas/contact.yaml
+          $ref: ../../../components/schemas/contact.yaml
   '404':
     $ref: ../../../components/responses/404.yaml
