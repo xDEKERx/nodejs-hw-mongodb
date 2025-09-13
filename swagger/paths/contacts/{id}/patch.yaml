@@ -17,7 +17,7 @@ parameters:
 requestBody:
   required: true
   content:
-    application/json: # 🔹 update без фото
+    application/json:
       schema:
         type: object
         properties:
@@ -42,7 +42,7 @@ requestBody:
         phoneNumber: '+380000000005'
         isFavourite: true
 
-    multipart/form-data: # 🔹 update з фото
+    multipart/form-data:
       schema:
         type: object
         properties:
