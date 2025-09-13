@@ -14,7 +14,7 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://nodejs-hw-mongodb-9-dkva.onrender.com" 
+      "url": "https://nodejs-hw-mongodb-9-dkva.onrender.com"
     }
   ],
   "tags": [
@@ -83,7 +83,7 @@
                   "photo": {
                     "description": "Contact's photo",
                     "type": "string",
-                    "example": "https://res.cloudinary.com/dcmbg0k5a/image/upload/v1756425071/ryfaxae0wuh9hyipzhv3.jpg"
+                    "format": "binary"
                   }
                 }
               }
@@ -260,7 +260,7 @@
     "/contact/{id}": {
       "get": {
         "tags": [
-          "Contact"
+          "Contacts"
         ],
         "summary": "Get contact by id",
         "operationId": "getContact",
@@ -318,7 +318,7 @@
       },
       "patch": {
         "tags": [
-          "Contact"
+          "Contacts"
         ],
         "summary": "Update contact by id",
         "operationId": "UpdateContact",
@@ -336,6 +336,52 @@
             "schema": {
               "type": "string",
               "example": "65ca67e7ae7f10c88b598384"
+            },
+            "requestBody": {
+              "content": {
+                "multipart/form-data": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "description": "Contact's name",
+                        "type": "string",
+                        "example": "John Doe"
+                      },
+                      "phoneNumber": {
+                        "description": "Contact's phone number",
+                        "type": "string",
+                        "example": "+380509215077"
+                      },
+                      "email": {
+                        "description": "Contact's email",
+                        "type": "string",
+                        "example": "example@mail.com"
+                      },
+                      "isFavourite": {
+                        "description": "Contact's is Favourite mark",
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "contactType": {
+                        "description": "Contact's type",
+                        "type": "string",
+                        "enum": [
+                          "personal",
+                          "home",
+                          "work"
+                        ],
+                        "example": "personal"
+                      },
+                      "photo": {
+                        "description": "Contact's photo",
+                        "type": "string",
+                        "format": "binary"
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         ],
@@ -376,7 +422,7 @@
       },
       "delete": {
         "tags": [
-          "Contact"
+          "Contacts"
         ],
         "summary": "Delete contact by id",
         "operationId": "deleteContact",
@@ -399,33 +445,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Delete contact by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 204
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully patch student with id 65ca67e7ae7f10c88b598384!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/contact"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Contact successfully deleted"
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -433,7 +453,7 @@
         }
       }
     },
-    "/auth": {
+    "/auth/register": {
       "post": {
         "tags": [
           "Auth"
