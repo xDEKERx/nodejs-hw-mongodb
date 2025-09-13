@@ -45,6 +45,31 @@ requestBody:
             description: "Contact's photo"
             type: string
             format: binary
+    application/json:
+      schema:
+        type: object
+        properties:
+          name:
+            description: "Contact's name"
+            type: string
+            example: 'John Doe'
+          phoneNumber:
+            description: "Contact's phone number"
+            type: string
+            example: '+380509215077'
+          email:
+            description: "Contact's email"
+            type: string
+            example: 'example@mail.com'
+          isFavourite:
+            description: "Contact's is Favourite mark"
+            type: boolean
+            example: false
+          contactType:
+            description: "Contact's type"
+            type: string
+            enum: ['personal', 'home', 'work']
+            example: personal
 responses:
   '200':
     description: 'Update contact by id'
