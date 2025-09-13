@@ -13,10 +13,11 @@ parameters:
     schema:
       type: string
       example: 65ca67e7ae7f10c88b598384
+
 requestBody:
   required: true
   content:
-    application/json:
+    application/json: # 🔹 update без фото
       schema:
         type: object
         properties:
@@ -36,13 +37,30 @@ requestBody:
             type: string
             enum: ['work', 'home', 'personal']
             example: home
-          photo:
-            type: string
-            format: binary
       example:
         name: Jane Doe
         phoneNumber: '+380000000005'
         isFavourite: true
+
+    multipart/form-data: # 🔹 update з фото
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+          phoneNumber:
+            type: string
+          email:
+            type: string
+          isFavourite:
+            type: boolean
+          contactType:
+            type: string
+            enum: ['work', 'home', 'personal']
+          photo:
+            type: string
+            format: binary
+
 responses:
   '200':
     description: Contact successfully updated
@@ -62,7 +80,6 @@ responses:
               type: string
               example: Successfully updated contact with id 65ca67e7ae7f10c88b598384
             data:
-              type: object
               $ref: ../../../components/schemas/contact.yaml
   '404':
     $ref: ../../../components/responses/404.yaml
