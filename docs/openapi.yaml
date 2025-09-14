@@ -1,23 +1,48 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Contacts app
+  title: Contacts App API
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: This is a documentation of contacts app
+  description: REST API for managing user contacts.
+    Supports creating, reading, updating, and deleting (CRUD) contacts.
+    Includes user registration, login, logout, and JWT-based authentication.
 tags:
   - name: Contacts
-    description: Operations about users.
+    description: Operations for work with user's contacts.
+  - name: Auth
+    description: Operations for authentication and user management.
 servers:
   - url: http://localhost:3000
   - url: https://nodejs-hw-mongodb-9-dkva.onrender.com
+security:
+  - bearerAuth: []
 paths:
-  /contacts:
+  /auth/register:
     post:
-      $ref: ../swagger/paths/contacts/post.yaml
+      $ref: ../swagger/paths/auth/register.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
+  /auth/reset-pwd:
+    post:
+      $ref: ../swagger/paths/auth/reset-pwd.yaml
+  /auth/send-reset-email:
+    post:
+      $ref: ../swagger/paths/auth/send-reset-email.yaml
+
+  /contacts:
     get:
       $ref: ../swagger/paths/contacts/get.yaml
+    post:
+      $ref: ../swagger/paths/contacts/post.yaml
   /contacts/{id}:
     get:
       $ref: ../swagger/paths/contacts/{id}/get.yaml
@@ -25,9 +50,6 @@ paths:
       $ref: ../swagger/paths/contacts/{id}/patch.yaml
     delete:
       $ref: ../swagger/paths/contacts/{id}/delete.yaml
-  /auth/register:
-    post:
-      $ref: ../swagger/paths/auth/register/post.yaml
 components:
   securitySchemes:
     bearerAuth:

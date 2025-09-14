@@ -1,0 +1,53 @@
+tags:
+  - Auth
+summary: User login
+operationId: loginUser
+description: Login with email and password to get access and refresh tokens.
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            type: string
+            example: johndoe@mail.com
+          password:
+            type: string
+            example: password123
+responses:
+  '200':
+    description: Successfully logged in
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in an user!
+            data:
+              type: object
+              required:
+                - accessToken
+                - refreshToken
+              properties:
+                accessToken:
+                  type: string
+                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                refreshToken:
+                  type: string
+                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+  '404':
+    $ref: ../../components/responses/404.yaml
