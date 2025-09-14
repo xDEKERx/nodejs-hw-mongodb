@@ -9,57 +9,60 @@ parameters:
   - in: path
     name: id
     required: true
+    description: Unique identifier of the contact
     schema:
       type: string
       example: 65ca67e7ae7f10c88b598384
-
 requestBody:
   required: true
   content:
-    application/json:
-      schema:
-        type: object
-        properties:
-          name:
-            type: string
-          phoneNumber:
-            type: string
-          email:
-            type: string
-          isFavourite:
-            type: boolean
-          contactType:
-            type: string
-            enum: ['work', 'home', 'personal']
-        example:
-          name: Jane Doe
-          phoneNumber: '+380000000005'
-          isFavourite: true
     multipart/form-data:
       schema:
         type: object
         properties:
-          photo:
-            type: string
-            format: binary
           name:
             type: string
+            example: Jane Doe
           phoneNumber:
             type: string
+            example: '+380000000005'
           email:
             type: string
+            example: janedoe@mail.com
           isFavourite:
             type: boolean
+            example: true
           contactType:
             type: string
             enum: ['work', 'home', 'personal']
-
+            example: home
+          photo:
+            type: string
+            format: binary
+      example:
+        name: Jane Doe
+        phoneNumber: '+380000000005'
+        isFavourite: true
 responses:
   '200':
     description: Contact successfully updated
     content:
       application/json:
         schema:
-          $ref: ../../../components/schemas/contact.yaml
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully updated contact with id 65ca67e7ae7f10c88b598384
+            data:
+              type: object
+              $ref: ../../../components/schemas/contact.yaml
   '401':
     $ref: ../../../components/responses/401.yaml
